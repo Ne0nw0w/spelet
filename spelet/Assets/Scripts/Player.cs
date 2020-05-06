@@ -30,6 +30,7 @@ namespace Completed
         public int sanityCount;
         public GameObject closedDoor;
         public GameObject openDoor;
+        public GameObject key;
 
         private Animator animator;                  //Used to store a reference to the Player's animator component.
         private int food;                           //Used to store player food points total during level.
@@ -52,7 +53,7 @@ namespace Completed
             //food = GameManager.instance.playerFoodPoints;
 
             //Set the foodText to reflect the current player food total.
-            sanityText.text = "Sanity: " + sanity;
+            
             sanityCount = 0;
             sanity = maxSanity;
             //Call the Start function of the MovingObject base class.
@@ -75,12 +76,20 @@ namespace Completed
             int horizontal = 0;     //Used to store the horizontal move direction.
             int vertical = 0;       //Used to store the vertical move direction.
             sanityCount++;
-            if (sanityCount == 120)
+            if (sanityCount == 10)
             {
-                sanity--;
+                
                 sanitySlider.value = sanity;
                 //Update food text display to reflect current score.
                 //sanityText.text = "Sanity: " + sanity;
+
+                sanityText.text = "Sanity: " + sanity;
+                if (sanity > 0 )
+                {
+                    //sanityText.text = "Sanity: " + 0;
+                    sanity--;
+                }
+
                 sanityCount = 0;
             }
             //Check if we are running either in the Unity editor or in a standalone build.
@@ -288,15 +297,32 @@ namespace Completed
 
                 enabled = false;
 
+                Invoke("GameOver",1f);
+
+
+
             }
             else if (other.tag == "Key")
             {
                 closedDoor.SetActive(false);
                 openDoor.SetActive(true);
-                Debug.Log("kolliderar med  nyckel");
+                key.SetActive(false);
+                
+            }
+            else if (other.tag == "Sawblade")
+            {
+                if (sanity > 0)
+                {
+                    sanity -= 1;
+                }
+                
             }
         }
 
+        private void GameOver()
+        {
+            SceneManager.LoadScene(0);
+        }
 
         //Restart reloads the scene when called.
         private void Restart()
@@ -328,7 +354,7 @@ namespace Completed
         //CheckIfGameOver checks if the player is out of food points and if so, ends the game.
         private void CheckIfGameOver()
         {
-            if (sanity <= 0)
+            /*if (sanity <= 0)
             {
                 //Call the PlaySingle function of SoundManager and pass it the gameOverSound as the audio clip to play.
                 SoundManager.instance.PlaySingle(gameOverSound);
@@ -338,7 +364,7 @@ namespace Completed
 
                 //Call the GameOver function of GameManager.
                 GameManager.instance.GameOver();
-            }
+            }*/
 
         }
     }
