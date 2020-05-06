@@ -16,7 +16,10 @@ public class SawBlade : MonoBehaviour
     public float direction;
     public bool forward = true;
     public bool horizontal = true;
-    private bool loopDone = false;
+    
+
+
+    
 
     void Start()
     {
@@ -106,5 +109,6 @@ public class SawBlade : MonoBehaviour
 
 
     }
+    
 
 }

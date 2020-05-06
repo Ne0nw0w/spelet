@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using Completed;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
     public float speed;
+
+
     
 
     private Transform target;
@@ -16,6 +19,11 @@ public class Monster : MonoBehaviour
 
     void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+       
+       if (Player.sanity <= 0)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
+        }
     }
 }
